@@ -25,8 +25,8 @@ public class SelenideTests {
         $("[data-test-id=\"phone\"] .input__control").setValue("+76666666666");
         $("[data-test-id=\"agreement\"] .checkbox__box").click();
         $("[role=\"button\"] .button__content").click();
-        $(withText("Успешно")).shouldBe(Condition.visible, Duration.ofSeconds(10));
-        $(withText("19.03.2021")).shouldBe(Condition.visible, Duration.ofSeconds(10));
+        $(withText("Успешно")).shouldBe(Condition.disappear, Duration.ofSeconds(10));
+        $(withText("19.03.2021")).shouldBe(Condition.disappear, Duration.ofSeconds(10));
 
 
 
