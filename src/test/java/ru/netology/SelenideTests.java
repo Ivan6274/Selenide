@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
+import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.LocalDate;
 
@@ -20,16 +21,16 @@ public class SelenideTests {
     void cardWithDelivery() {
         open("http://localhost:8888");
         $("[data-test-id='city'] .input__control").setValue("Москва");
-//        $("[data-test-id='date'] .calendar-input__native-control").sendKeys(Keys.chord(Keys.SHIFT,Keys.HOME),Keys.BACK_SPACE);
-//        LocalDate today = LocalDate.now();
-//        LocalDate needDay = today.plusDays(3);
-//        $("calendar-input__native-control").setValue(String.valueOf(needDay));
+        $("[data-test-id='date'] .input__control").sendKeys(Keys.chord(Keys.SHIFT,Keys.HOME),Keys.BACK_SPACE);
+        LocalDate today = LocalDate.now();
+        LocalDate needDay = today.plusDays(3);
+        $("[data-test-id='date'] .input__control").setValue(new DecimalFormat("00").format(needDay.getDayOfMonth())+"."+ new DecimalFormat("00").format(needDay.getMonthValue())+"."+ needDay.getYear() );
         $("[data-test-id='name'] .input__control").setValue("Добрыня Никитич");
         $("[data-test-id=\"phone\"] .input__control").setValue("+76666666666");
         $("[data-test-id=\"agreement\"] .checkbox__box").click();
         $("[role=\"button\"] .button__content").click();
-        $(withText("Успешно")).shouldBe(Condition.disappear, Duration.ofSeconds(10));
-        $(withText("19.03.2021")).shouldBe(Condition.disappear, Duration.ofSeconds(10));
+        $(withText("Успешно")).shouldBe(Condition.visible, Duration.ofSeconds(15));
+        $(withText(new DecimalFormat("00").format(needDay.getDayOfMonth())+"."+ new DecimalFormat("00").format(needDay.getMonthValue())+"."+ needDay.getYear() )).shouldBe(Condition.visible, Duration.ofSeconds(15));
 
 
 
@@ -43,7 +44,7 @@ public class SelenideTests {
         $("[data-test-id='city'] .input__control").setValue("Мо");
         $(withText("Москва")).click();
         $(By.cssSelector(("[data-test-id=\"date\"]  .input__box"))).click();
-        int addDay = 17;
+        int addDay = 7;
         LocalDate today = LocalDate.now();
         LocalDate needDay = today.plusDays(addDay);
         if ((needDay.getDayOfMonth() + addDay)>= LocalDate.MAX.getDayOfMonth()) {
@@ -56,8 +57,8 @@ public class SelenideTests {
         $("[data-test-id=\"phone\"] .input__control").setValue("+76666666666");
         $("[data-test-id=\"agreement\"] .checkbox__box").click();
         $("[role=\"button\"] .button__content").click();
-        $(withText("Успешно")).shouldBe(Condition.disappear, Duration.ofSeconds(10));
-        $(withText("19.03.2021")).shouldBe(Condition.disappear, Duration.ofSeconds(10));
+        $(withText("Успешно")).shouldBe(Condition.visible, Duration.ofSeconds(25));
+        $(withText(new DecimalFormat("00").format(needDay.getDayOfMonth())+"."+ new DecimalFormat("00").format(needDay.getMonthValue())+"."+ needDay.getYear() )).shouldBe(Condition.visible, Duration.ofSeconds(25));
     }
 
 }
